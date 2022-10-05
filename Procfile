@@ -1,4 +1,4 @@
 
 # Procfile
 
-web: gunicorn mysite.wsgi
+web: gunicorn myblog.wsgi
