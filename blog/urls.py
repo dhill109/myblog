@@ -1,8 +1,11 @@
 # blog/urls.py
+from django.contrib import admin
 from django.urls import path
+from blog import views
 from .views import PostListView, PostDetailView
 
+
 urlpatterns = [
-    path('', PostListView.as_view(), name='home'),
-    path('blog/<int:pk>', PostDetailView.as_view(), name='post_detail')
+    path('admin/', admin.site.urls),
+    path('', views.home, name='home'),  # Set root to home view
 ]

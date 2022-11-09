@@ -1,0 +1,90 @@
+/* blog/static/blog/base.css */
+
+html {
+  height: 100%; /* Use whole height of browser */
+
+}
+
+body {
+  background-color: #f0f0f0;
+  display: grid;  /* Use CSS grid */
+  font-family: Arial, Helvetica, sans-serif;
+  grid-template-rows: auto auto 1fr auto;  /* Sticky footer */
+  margin: 0 auto;  /* Centers the page */
+  max-width: 1000px;  /* Set max width */
+  min-height: 100%;  /* Full height */
+  padding: 1rem;
+
+}
+
+/*
+ * Style the <a> tags. Have a consistent colour for both visited
+ * and unvisited links. Show underline on hover only.
+ */
+a {
+  color: #0366d6;
+  text-decoration: none;
+}
+
+#top-nav a:hover {
+  text-decoration: underline;
+}
+
+/* Style the header area */
+#site-header h1 {
+  padding: 0;
+  margin: 0;
+}
+
+#site-header p {
+  font-size: 0.9rem;
+  color: #666;
+  padding: 0;
+  margin: 0;
+}
+
+/* Style the top nav */
+#top-nav {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+#top-nav ul {
+  margin: 0;
+  padding: 0;
+}
+
+#top-nav li {
+  margin-top: 1rem;
+  list-style-type: none;
+  display: inline-block;
+  padding-right: 1rem;
+}
+
+#top-nav a {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Style the main content */
+#main-content {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+/* Style the footer */
+#site-footer {
+  font-size: 0.9rem;
+}
+
+#main-content {
+  background-color: #fefbd8;
+  margin-top: 1rem;
+  display: grid;
+  /* The grid has 2 columns. 1 with auto width, the other is 200px wide */
+  grid-template-columns: auto 200px;
+}
+#sidebar {
+  background-color: #d5f4e6;
+
+}

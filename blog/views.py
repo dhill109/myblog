@@ -5,7 +5,24 @@ from django.views.generic.detail import SingleObjectMixin
 from django.urls import reverse
 from .forms import CommentForm
 from .models import Post, Comment
+from . import models
+from django.db.models import Count
 
+def home(request):
+    """
+    The Blog homepage
+    """
+    # Get last 3 posts
+    latest_posts = models.Post.objects.published().order_by('-published')[:3]
+    authors = models.Post.objects.published().get_authors().order_by('first_name')
+    topics = models.Post.objects.values_list('topics__name').annotate(num = Count('id')).order_by('-num')
+    
+    context = {
+        'authors': authors,
+        'latest_posts': latest_posts,
+        'topics': topics,
+        }
+    return render(request, 'blog/home.html', context)
 
 class PostListView(ListView):
     model = Post

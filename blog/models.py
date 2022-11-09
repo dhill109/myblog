@@ -1,5 +1,15 @@
 from django.conf import settings
 from django.db import models
+from django.utils import timezone
+from django.contrib.auth import get_user_model
+from django.db.models import Count
+
+class PostQueryset(models.QuerySet):
+    def published(self):
+        return self.filter(status=self.model.PUBLISHED)
+    def get_authors(self):
+        User = get_user_model()
+        return User.objects.filter(blog_posts__in=self).distinct()
 
 class Topic(models.Model):
     name = models.CharField(
@@ -9,6 +19,7 @@ class Topic(models.Model):
         unique=True  # No duplicates!
     )
     slug = models.SlugField(unique=True, null=False)
+    objects = PostQueryset.as_manager()
 
     def __str__(self):
         return self.name
@@ -53,6 +64,7 @@ class Post(models.Model):
         blank=False,
         help_text='The date & time this article was published',
     )
+    objects = PostQueryset.as_manager()
     created = models.DateTimeField(auto_now_add=True)  # Sets on create
     updated = models.DateTimeField(auto_now=True)  # Updates on each save
     class Meta:

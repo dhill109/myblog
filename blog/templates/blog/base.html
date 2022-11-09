@@ -1,0 +1,60 @@
+<!-- blog/templates/blog/base.html -->
+{% load static %} <link rel="stylesheet" href="{% static "blog/base.css" %}">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>My Blog – {% block page_title %}An awesome blog{% endblock %}</title>
+</head>
+
+<body>
+  <!-- The header -->
+  <header id="site-header">
+     <h1>Django Blog</h1>
+     <p>A blog about awesomeness</p>
+  </header>
+
+  <!-- Top navigation -->
+  <nav id="top-nav">
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Posts</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main id="main-content">
+      <div>
+        {% block main %}
+        <!-- Content for the main block will be rendered here -->
+        {% endblock %}
+      </div>
+  <aside id="sidebar">
+    <section id="topic-list">
+      <h4>Topics</h4>
+      <ul>
+        {% for topic in topics %}
+          <li>{{ topic}}</li>
+        {% endfor %}
+      </ul>
+    </section>
+   <section id="author-list">
+     <h4>Authors</h4>
+     <ul>
+       {% for entry in entries %}
+         <li>{{ entry }}</li>
+       {% endfor %}
+     </ul>
+   </section>
+  </aside>
+
+  </main>
+
+  <!-- The footer -->
+  <footer id="site-footer">
+    <!-- Print copyright with the current year -->
+    Copyright &copy;{% now 'Y' %}
+  </footer>
+</body>
+</html>
