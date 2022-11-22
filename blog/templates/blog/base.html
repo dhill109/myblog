@@ -17,9 +17,10 @@
   <!-- Top navigation -->
   <nav id="top-nav">
     <ul>
-      <li><a href="#">Home</a></li>
-      <li><a href="#">About</a></li>
-      <li><a href="#">Posts</a></li>
+      <li><a href="{% url "home" %}">Home</a></li>
+      <li><a href="{% url "about" %}">About</a></li>
+      <li><a href="{% url "post-list" %}">Posts</a></li>
+      <li><a href="{% url "topic-list" %}">Topics</a></li>
       <li><a href="#">Contact</a></li>
     </ul>
   </nav>
@@ -34,8 +35,8 @@
     <section id="topic-list">
       <h4>Topics</h4>
       <ul>
-        {% for topic in topics %}
-          <li>{{ topic}}</li>
+        {% for top in topics %}
+          <li><a href="{{ top.get_absolute_url }}">{{ top}}</a></li>
         {% endfor %}
       </ul>
     </section>
@@ -54,7 +55,8 @@
   <!-- The footer -->
   <footer id="site-footer">
     <!-- Print copyright with the current year -->
-    Copyright &copy;{% now 'Y' %}
+    Copyright &copy;{% now 'Y' %} -
+    <a href="{% url "terms-and-conditions" %}">Terms & conditions</a>
   </footer>
 </body>
 </html>

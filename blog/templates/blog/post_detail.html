@@ -1,30 +1,16 @@
-<!-- templates/post_detail.html -->
-{% extends 'base.html' %}
+{% extends "blog/base.html" %}
 
-{% block content %}
-<h1>{{ post.title }}</h1>
-<p>{{ post.content|linebreaks }}</p>
-<hr>
-<h2 id="comments">Comments</h2>
-{% for comment in post.comment_set.all %}
-<b>{{ comment.name }}</b> said <b>{{ comment.created_on|timesince }} ago.</b>
-<br>Email: {{ comment.email }}<br>
-<p>Commented: {{ comment.comment }}</p>
-{% empty %}
-<p>Feel free to leave the first comment!</p>
-{% endfor %}
-<hr>
-<h3 id="comment-form">Add a comment</h3>
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit</button>
-</form>
-{% if form.is_bound %}
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("comment-form").scrollIntoView();
-  });
-</script>
-{% endif %}
+{% block page_title %}{{ post.title }}{% endblock %}
+
+{% block main %}
+<article id="post-detail-article">
+  <h1>{{ post.title }}</h1>
+  <span class="published">Published <time>{{ post.published }}</time></span><br>
+  <span class="author">by {{ post.author }}</span><br>
+  {% for topic in post.topics.all %}
+    <span class="author"><a href="{% url 'topic-detail' topic.slug %}">
+      {{ topic }}
+    {% endfor %}</a></span><br>
+  <section class="content">{{ post.content|linebreaks }}</section>
+</article>
 {% endblock %}

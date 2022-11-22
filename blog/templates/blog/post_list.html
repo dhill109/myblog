@@ -1,0 +1,13 @@
+{# blog/templates/blog/post_list.html #}
+
+{% extends "blog/base.html" %}
+
+{% block page_title %}Posts{% endblock %}
+
+{% block main %}
+<h1>Posts</h1>
+{% for post in posts %}
+  {% include "blog/post_preview.html" %}
+{% endfor %}
+
+{% endblock %}

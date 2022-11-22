@@ -7,37 +7,62 @@ from .forms import CommentForm
 from .models import Post, Comment
 from . import models
 from django.db.models import Count
+from django.views.generic.base import TemplateView
 
-def home(request):
-    """
-    The Blog homepage
-    """
-    # Get last 3 posts
-    latest_posts = models.Post.objects.published().order_by('-published')[:3]
-    authors = models.Post.objects.published().get_authors().order_by('first_name')
-    topics = models.Post.objects.values_list('topics__name').annotate(num = Count('id')).order_by('-num')
-    
-    context = {
-        'authors': authors,
-        'latest_posts': latest_posts,
-        'topics': topics,
-        }
-    return render(request, 'blog/home.html', context)
+class HomeView(TemplateView):
+    template_name = 'blog/home.html'
+
+    def get_context_data(self, **kwargs):
+        # Get the parent context
+        context = super().get_context_data(**kwargs)
+        latest_posts = models.Post.objects.published() \
+            .order_by('-published')[:3]
+        authors = models.Post.objects.published().get_authors().order_by('first_name')
+
+        context.update({'latest_posts': latest_posts, 'authors': authors,})
+        return context
+
+class AboutView(TemplateView):
+    template_name = 'blog/about.html'
+
+def terms_and_conditions(request):
+    return render(request, 'blog/terms_and_conditions.html')
 
 class PostListView(ListView):
-    model = Post
-    template_name = 'home.html'
+    model = models.Post
     context_object_name = 'posts'
+    queryset = models.Post.objects.published().order_by('-published')
 
-class PostDetailView(View):
 
-    def get(self, request, *args, **kwargs):
-        view = PostDisplay.as_view()
-        return view(request, *args, **kwargs)
+class PostDetailView(DetailView):
+    model = models.Post
 
-    def post(self, request, *args, **kwargs):
-        view = PostComment.as_view()
-        return view(request, *args, **kwargs)
+    def get_queryset(self):
+        # Get the base queryset
+        queryset = super().get_queryset().published()
+        if 'pk' in self.kwargs:
+            return queryset
+
+        return queryset.filter(
+            published__year=self.kwargs['year'],
+            published__month=self.kwargs['month'],
+            published__day=self.kwargs['day'],
+        )
+class TopicListView(ListView):
+    model = models.Topic
+    context_object_name = 'topics'
+    queryset =  models.Topic.objects.order_by('name')
+
+class TopicDetailView(DetailView):
+    model = models.Topic
+    def get_queryset(self):
+        # Get the base queryset
+        queryset = super().get_queryset()
+        if 'pk' in self.kwargs:
+            return queryset
+
+        return queryset.filter(
+        )
 
 class PostDisplay(DetailView):
     model = Post

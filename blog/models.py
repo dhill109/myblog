@@ -3,6 +3,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth import get_user_model
 from django.db.models import Count
+from django.urls import reverse
 
 class PostQueryset(models.QuerySet):
     def published(self):
@@ -21,15 +22,22 @@ class Topic(models.Model):
     slug = models.SlugField(unique=True, null=False)
     objects = PostQueryset.as_manager()
 
+    def get_absolute_url(self):
+        if self.name:
+            kwargs = {
+                'slug': self.slug
+            }
+        else:
+            kwargs = {'pk': self.pk}
+        return reverse('topic-detail', kwargs=kwargs)
+
     def __str__(self):
         return self.name
 
     class Meta:
         ordering = ['name']
 class Post(models.Model):
-    """
-    Represents a blog post
-    """
+
     DRAFT = 'draft'
     PUBLISHED = 'published'
     STATUS_CHOICES = [
@@ -71,6 +79,19 @@ class Post(models.Model):
         ordering = ['created']
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        if self.published:
+            kwargs = {
+                'year': self.published.year,
+                'month': self.published.month,
+                'day': self.published.day,
+                'slug': self.slug
+            }
+        else:
+            kwargs = {'pk': self.pk}
+
+        return reverse('post-detail', kwargs=kwargs)
 
 class PostManager(models.Manager):
     """

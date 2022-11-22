@@ -1,0 +1,12 @@
+{% extends "blog/base.html" %}
+
+{% block page_title %}{{ topic.name }}{% endblock %}
+
+{% block main %}
+<h1>{{topic.name}}</h1>
+<hr>
+{% for post in posts.topics.all %}
+   {{ post.content|truncatewords:20 }}
+  {% endfor %}<br>
+
+{% endblock %}

@@ -6,7 +6,7 @@ html {
 }
 
 body {
-  background-color: #f0f0f0;
+  background-color: #ffffff;
   display: grid;  /* Use CSS grid */
   font-family: Arial, Helvetica, sans-serif;
   grid-template-rows: auto auto 1fr auto;  /* Sticky footer */
@@ -25,12 +25,20 @@ a {
   color: #0366d6;
   text-decoration: none;
 }
+a:hover {
+  text-decoration: underline;
+}
 
 #top-nav a:hover {
   text-decoration: underline;
 }
 
 /* Style the header area */
+
+#site-header {
+  background-color: #f0f0f0;
+}
+
 #site-header h1 {
   padding: 0;
   margin: 0;
@@ -46,7 +54,7 @@ a {
 /* Style the top nav */
 #top-nav {
   padding: 0.5rem 0;
-  border-bottom: 1px solid #eee;
+  border-bottom: 2px solid #080808;
 }
 
 #top-nav ul {
@@ -86,5 +94,44 @@ a {
 }
 #sidebar {
   background-color: #d5f4e6;
+}
 
+#site-footer a:hover {
+  text-decoration: underline;
+}
+/* Post preview */
+.post-preview {
+  border-bottom: 1px #eee solid;
+}
+.post-preview h2 {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.post-preview time {
+  color: #999;
+}
+
+.post-preview section {
+  margin: 1rem 0;
+}
+/* Post detail article */
+#post-detail-article h1 {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+#post-detail-article .author {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #555;
+}
+
+#post-detail-article .published {
+  color: #999;
+  font-size: 0.9rem;
+}
+
+#post-detail-article .content {
+  margin: 2rem 0;
 }
