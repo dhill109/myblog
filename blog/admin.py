@@ -34,7 +34,38 @@ class PostAdmin(admin.ModelAdmin):
         CommentInline,
     ]
     prepopulated_fields = {'slug': ('title',)}
-    
+@admin.register(models.Contact)
+class ContactAdmin(admin.ModelAdmin):
+    list_display = (
+        'email',
+        'last_name',
+        'first_name',
+        'submitted'
+    )
+    # Make these fields read-only in the admin
+    readonly_fields = (
+        'first_name',
+        'last_name',
+        'email',
+        'message',
+        'submitted'
+    )
+@admin.register(models.Contest)
+class ContestAdmin(admin.ModelAdmin):
+    list_display = (
+        'email',
+        'last_name',
+        'first_name',
+        'submitted'
+    )
+    # Make these fields read-only in the admin
+    readonly_fields = (
+        'first_name',
+        'last_name',
+        'email',
+        'photo',
+        'submitted'
+    )
 @admin.register(models.Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = (

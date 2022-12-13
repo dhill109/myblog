@@ -11,6 +11,9 @@
     <span class="author"><a href="{% url 'topic-detail' topic.slug %}">
       {{ topic }}
     {% endfor %}</a></span><br>
-  <section class="content">{{ post.content|linebreaks }}</section>
+  <section class="content">{{ post.content|safe|linebreaks }}</section>
 </article>
+{% if post.banner %}
+  <img src="{{ post.banner.url }}" width="100%" alt="Banner image">
+{% endif %}
 {% endblock %}
